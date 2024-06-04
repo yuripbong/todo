@@ -19,6 +19,7 @@ const CreateTaskPopup = ({ modal, toggle, save }) => {
         let taskObj = {};
         taskObj["Name"] = taskName;
         taskObj["Description"] = description;
+        taskObj["Completed"] = false; // 새로운 ToDo는 기본적으로 완료되지 않은 상태
         save(taskObj);
     };
 

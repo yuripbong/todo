@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
+    const [completed, setCompleted] = useState(false); // 완료상태 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -14,9 +15,15 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
         }
     };
 
+    // 체크박스 핸들러
+    const handleCheckboxChange = () => {
+        setCompleted(!completed);
+    };
+
     useEffect(() => {
         setTaskName(taskObj.Name);
         setDescription(taskObj.Description);
+        setCompleted(taskObj.Completed); // Completed 상태
     }, [taskObj]);
 
     const handleUpdate = (e) => {
@@ -24,6 +31,7 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
         let tempObj = {};
         tempObj['Name'] = taskName;
         tempObj['Description'] = description;
+        tempObj['Completed'] = completed; // Completed 상태 포함
         updateTask(tempObj);
     };
 
@@ -55,6 +63,16 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
                             name="description"
                             margin="dense"
                         />
+                    </div>
+                    <div className="form-group">
+                        <label>
+                            <input
+                                type="checkbox" // 체크박스 input 추가
+                                checked={completed}
+                                onChange={handleCheckboxChange}
+                            />
+                            Completed
+                        </label>
                     </div>
                 </DialogContentText>
             </DialogContent>
